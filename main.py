@@ -5,10 +5,15 @@ I hope i will finish it.
 
 
 """
-import sys
-import math
-import decimal as dcml # Using module for more accuracy that float has.
-import tkinter as tk
+
+# Trying to import necessary modules.
+try:
+    import sys
+    import math
+    import decimal as dcml # Using module for more accuracy that float has.
+    import tkinter as tk
+except ModuleNotFoundError:
+    print("Can't import modules for work. Try to install necessary modules.")
 
 
 # List with names for buttons.
@@ -31,6 +36,8 @@ def main():
     # This loop automatically creating buttons using "buttons" list.
     for i in buttons:
         pass
-        
+
+    window.mainloop()
+
 
 main()
