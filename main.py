@@ -12,6 +12,7 @@ try:
     import math
     import decimal as dcml # Using module for more accuracy that float has.
     import tkinter as tk
+    import functions_class
 except ModuleNotFoundError:
     print("Can't import modules for work. Try to install necessary modules.")
 
@@ -21,7 +22,7 @@ list_of_buttons = ['1', '2', '3',
             '4', '5', '6',
             '7', '8', '9',
             '0', '+', '-', '/', '*',
-            '=']
+            '=', 'x!', 'Pi', 'CE',]
 
 
 # Creating main window and give a title to it.
@@ -29,8 +30,12 @@ window = tk.Tk()
 window.title('Чо это.')
 
 # Creating Entry window for displaying numbers and actions.
-calculating_display = tk.Entry(window, width=30)
-calculating_display.grid(row=0, column=0, columnspan=5)
+calculating_display = tk.Entry(window, width=50)
+calculating_display.grid(row=0, column=0, columnspan=50)
+
+# Creating class object for functions.
+func = functions_class.Functions()
+
 
 def main():
     """
@@ -75,14 +80,39 @@ def foo(key): # Temporate name for function.
     # If key is '=' -> using eval function that calculating
     # existing in Enrty field expression.
     if key == '=':
-        # Calculating result...
-        result = eval(calculating_display.get())
+        try:
+            # Calculating result...
+            result = eval(calculating_display.get())
 
-        # Then display '=' and after that we can display result.
-        # In other way -> SyntaxError while calculating because
-        # eval() does not understand '=' symbol.
-        calculating_display.insert(tk.END, key)
-        calculating_display.insert(tk.END, result)
+            # Then display '=' and after that we can display result.
+            # In other way -> SyntaxError while calculating because
+            # eval() does not understand '=' symbol.
+            calculating_display.insert(tk.END, key)
+            calculating_display.insert(tk.END, result)
+        except SyntaxError:
+            # Deleting all.
+            calculating_display.delete(0, tk.END)
+            # Show error.
+            calculating_display.insert(tk.END,\
+                    'Error. Clear display when more than one "=" in line.')
+            # Wait for 2 seconds and clear display again.
+            calculating_display.after(2000,\
+                        lambda: calculating_display.delete(0, tk.END))
+
+    # Using function class.
+    elif key == 'x!':
+        # Calculating factorial.
+        calculating_display.insert(tk.END, '=' +\
+                                str(func.factor(int(\
+                                calculating_display.get()))))
+
+    elif key == 'Pi':
+        # Display pi.
+        calculating_display.insert(tk.END, func.pi())
+
+    # Clear display.
+    elif key == 'CE':
+        calculating_display.delete(0, tk.END)
 
     else:
         # Display pressed key.
