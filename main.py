@@ -20,8 +20,17 @@ except ModuleNotFoundError:
 list_of_buttons = ['1', '2', '3',
             '4', '5', '6',
             '7', '8', '9',
-            '0', '+', '-', '/', '*',]
+            '0', '+', '-', '/', '*',
+            '=']
 
+
+# Creating main window and give a title to it.
+window = tk.Tk()
+window.title('Чо это.')
+
+# Creating Entry window for displaying numbers and actions.
+calculating_display = tk.Entry(window, width=30)
+calculating_display.grid(row=0, column=0, columnspan=5)
 
 def main():
     """
@@ -29,17 +38,9 @@ def main():
     window, buttons, out-print window.
     """
 
-    # Creating main window and give a title to it.
-    window = tk.Tk()
-    window.title('Чо это.')
-
     # Variables for loop. Need for griding buttons.
     _column = 0
     _row = 1
-
-    # Creating Entry window for displaying numbers and actions.
-    calculating_display = tk.Entry(window, width=30)
-    calculating_display.grid(row=0, column=0, columnspan=5)
 
     # This loop automatically creating buttons using "buttons" list.
     for _key in list_of_buttons:
@@ -71,8 +72,24 @@ def foo(key): # Temporate name for function.
 
     """
 
-    pass
+    # If key is '=' -> using eval function that calculating
+    # existing in Enrty field expression.
+    if key == '=':
+        # Calculating result...
+        result = eval(calculating_display.get())
+
+        # Then display '=' and after that we can display result.
+        # In other way -> SyntaxError while calculating because
+        # eval() does not understand '=' symbol.
+        calculating_display.insert(tk.END, key)
+        calculating_display.insert(tk.END, result)
+
+    else:
+        # Display pressed key.
+        calculating_display.insert(tk.END, key)
+
 
 
 if __name__ == "__main__":
+
     main()
