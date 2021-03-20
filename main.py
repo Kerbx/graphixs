@@ -35,7 +35,11 @@ def main():
 
     # Variables for loop. Need for griding buttons.
     _column = 0
-    _row = 0
+    _row = 1
+
+    # Creating Entry window for displaying numbers and actions.
+    calculating_display = tk.Entry(window, width=30)
+    calculating_display.grid(row=0, column=0, columnspan=5)
 
     # This loop automatically creating buttons using "buttons" list.
     for _key in list_of_buttons:
@@ -44,7 +48,7 @@ def main():
 
         # Creating button and grid it in window.
         button = tk.Button(window, text=_key,\
-                        command = command_for_button)
+                        command=command_for_button, width=5)
         # Griding created button.
         button.grid(row=_row, column=_column)
 
@@ -59,8 +63,16 @@ def main():
     window.mainloop()
 
 
-def foo(key):
+def foo(key): # Temporate name for function.
+    """
+    Function for buttons.
+    When clicked -> name of button displays on Entry field.
+    This function maybe will be used for calculating.
+
+    """
+
     pass
 
 
-main()
+if __name__ == "__main__":
+    main()
